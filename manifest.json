@@ -1,0 +1,29 @@
+{
+  "name": "LedgerFlow",
+  "short_name": "LedgerFlow",
+  "description": "Intelligent Accounting & Bookkeeping System",
+  "start_url": "/index.html",
+  "display": "standalone",
+  "display_override": ["window-controls-overlay"],
+  "orientation": "any",
+  "background_color": "#FDF8F0",
+  "theme_color": "#C0392B",
+  "categories": ["finance", "business", "productivity"],
+  "lang": "en-ZA",
+  "dir": "ltr",
+  "scope": "/",
+  "icons": [
+    { "src": "/icons/icon-192.png", "sizes": "192x192", "type": "image/png", "purpose": "any maskable" },
+    { "src": "/icons/icon-512.png", "sizes": "512x512", "type": "image/png", "purpose": "any maskable" },
+    { "src": "/icons/icon.svg", "sizes": "any", "type": "image/svg+xml", "purpose": "any" }
+  ],
+  "screenshots": [],
+  "shortcuts": [
+    { "name": "Dashboard", "short_name": "Dashboard", "url": "/index.html#dashboard" },
+    { "name": "New Invoice", "short_name": "Invoice", "url": "/index.html#receivables" },
+    { "name": "Journal Entry", "short_name": "Journal", "url": "/index.html#journal" },
+    { "name": "Reports", "short_name": "Reports", "url": "/index.html#reports" }
+  ],
+  "related_applications": [],
+  "prefer_related_applications": false
+}

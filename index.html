@@ -1,14 +1,35 @@
 <!DOCTYPE html>
-<html lang="en" data-theme="light">
+<html lang="en" data-theme="light" class="no-js">
 <head>
   <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0">
+  <meta name="description" content="LedgerFlow — Intelligent Accounting & Bookkeeping System. Full-stack Xero-like financial management.">
+  <meta name="author" content="Thando Hlomuka">
+  <meta name="theme-color" content="#C0392B">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="default">
+  <meta name="apple-mobile-web-app-title" content="LedgerFlow">
+  <meta name="application-name" content="LedgerFlow">
+  <meta name="mobile-web-app-capable" content="yes">
+  <meta name="format-detection" content="telephone=no">
+  <meta property="og:title" content="LedgerFlow — Intelligent Accounting">
+  <meta property="og:description" content="Full-stack Xero-like accounting system built by Thando Hlomuka.">
+  <meta property="og:type" content="website">
+  <meta name="twitter:card" content="summary_large_image">
   <title>LedgerFlow — Intelligent Accounting</title>
+  <link rel="manifest" href="manifest.json">
+  <link rel="icon" type="image/svg+xml" href="icons/icon.svg">
+  <link rel="icon" type="image/png" sizes="32x32" href="icons/icon-32.png">
+  <link rel="icon" type="image/png" sizes="192x192" href="icons/icon-192.png">
+  <link rel="apple-touch-icon" sizes="192x192" href="icons/icon-192.png">
+  <link rel="apple-touch-icon" sizes="512x512" href="icons/icon-512.png">
   <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="css/style.css">
 </head>
 <body>
+<div class="no-js-message">LedgerFlow requires JavaScript to function. Please enable JavaScript in your browser.</div>
 <div class="app-layout">
 
   <!-- ─── Sidebar ─── -->
@@ -111,6 +132,9 @@
     <!-- ─── Page Content ─── -->
     <div class="page-content">
 
+      <!-- AI Suggestion Banner -->
+      <div id="ai-suggestion"></div>
+
       <!-- ════════════════ DASHBOARD ════════════════ -->
       <section class="module active" id="mod-dashboard">
         <div class="stats-grid">
@@ -121,8 +145,8 @@
                 <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="23 6 13.5 15.5 8.5 10.5 1 18"/><polyline points="17 6 23 6 23 12"/></svg>
               </span>
             </div>
-            <div class="stat-card-value text-green">R 1,842,500</div>
-            <div class="stat-card-change up">&#9650; 12.5% vs last month</div>
+            <div class="stat-card-value text-green" id="stat-revenue">R 1,842,500</div>
+            <div class="stat-card-change up" id="stat-revenue-change">&#9650; 12.5% vs last month</div>
           </div>
           <div class="stat-card fade-in">
             <div class="stat-card-header">
@@ -131,8 +155,8 @@
                 <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="23 18 13.5 8.5 8.5 13.5 1 6"/><polyline points="17 18 23 18 23 12"/></svg>
               </span>
             </div>
-            <div class="stat-card-value text-red">R 1,124,300</div>
-            <div class="stat-card-change down">&#9650; 8.2% vs last month</div>
+            <div class="stat-card-value text-red" id="stat-expenses">R 1,124,300</div>
+            <div class="stat-card-change down" id="stat-expenses-change">&#9650; 8.2% vs last month</div>
           </div>
           <div class="stat-card fade-in">
             <div class="stat-card-header">
@@ -141,8 +165,8 @@
                 <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="M16 8h-6a2 2 0 100 4h4a2 2 0 110 4H8"/><path d="M12 18V6"/></svg>
               </span>
             </div>
-            <div class="stat-card-value text-gold">R 718,200</div>
-            <div class="stat-card-change up">&#9650; 18.3% vs last month</div>
+            <div class="stat-card-value text-gold" id="stat-profit">R 718,200</div>
+            <div class="stat-card-change up" id="stat-profit-change">&#9650; 18.3% vs last month</div>
           </div>
           <div class="stat-card fade-in">
             <div class="stat-card-header">
@@ -151,8 +175,8 @@
                 <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="6" width="20" height="12" rx="2"/><circle cx="12" cy="12" r="2"/></svg>
               </span>
             </div>
-            <div class="stat-card-value">R 2,450,000</div>
-            <div class="stat-card-change up">&#9650; 3.1% vs last month</div>
+            <div class="stat-card-value" id="stat-cash">R 2,450,000</div>
+            <div class="stat-card-change up" id="stat-cash-change">&#9650; 3.1% vs last month</div>
           </div>
         </div>
 
@@ -163,21 +187,8 @@
               <a href="#" onclick="switchModule('reports'); return false;">View Reports</a>
             </div>
             <div class="panel-body">
-              <div class="chart-area" id="revenueChart">
-                <div class="chart-bar green" style="height:78%"><span class="tooltip">R 152K</span></div>
-                <div class="chart-bar red" style="height:65%"><span class="tooltip">R 128K</span></div>
-                <div class="chart-bar green" style="height:82%"><span class="tooltip">R 161K</span></div>
-                <div class="chart-bar red" style="height:71%"><span class="tooltip">R 140K</span></div>
-                <div class="chart-bar green" style="height:90%"><span class="tooltip">R 176K</span></div>
-                <div class="chart-bar red" style="height:68%"><span class="tooltip">R 135K</span></div>
-                <div class="chart-bar green" style="height:75%"><span class="tooltip">R 148K</span></div>
-                <div class="chart-bar red" style="height:60%"><span class="tooltip">R 119K</span></div>
-                <div class="chart-bar green" style="height:85%"><span class="tooltip">R 168K</span></div>
-                <div class="chart-bar red" style="height:73%"><span class="tooltip">R 144K</span></div>
-                <div class="chart-bar green" style="height:95%"><span class="tooltip">R 187K</span></div>
-                <div class="chart-bar red" style="height:80%"><span class="tooltip">R 158K</span></div>
-              </div>
-              <div class="chart-labels">
+              <div class="chart-area" id="revenueChart"></div>
+              <div class="chart-labels" id="chart-labels">
                 <span>Jul</span><span>Aug</span><span>Sep</span><span>Oct</span><span>Nov</span><span>Dec</span>
                 <span>Jan</span><span>Feb</span><span>Mar</span><span>Apr</span><span>May</span><span>Jun</span>
               </div>
@@ -189,14 +200,7 @@
               <h3>Recent Activity</h3>
               <a href="#">View All</a>
             </div>
-            <div class="panel-body" style="padding-top:8px;">
-              <div class="activity-item">
-                <span class="activity-dot green"></span>
-                <div class="activity-content">
-                  <p>Invoice <strong>INV-0042</strong> paid — <span class="text-green font-bold">R 24,500</span></p>
-                  <div class="time">12 minutes ago</div>
-                </div>
-              </div>
+            <div class="panel-body" style="padding-top:8px;" id="activity-feed">
               <div class="activity-item">
                 <span class="activity-dot red"></span>
                 <div class="activity-content">
@@ -221,7 +225,7 @@
               <div class="activity-item">
                 <span class="activity-dot red"></span>
                 <div class="activity-content">
-                  <p>Bank reconciliation <strong mismatch>1</strong> mismatch found</p>
+                  <p>Bank reconciliation <strong>1</strong> mismatch found</p>
                   <div class="time">Yesterday at 4:30 PM</div>
                 </div>
               </div>
@@ -240,7 +244,7 @@
                 <thead>
                   <tr><th>Invoice</th><th>Customer</th><th>Amount</th><th>Date</th><th>Status</th></tr>
                 </thead>
-                <tbody>
+                <tbody id="recent-invoices-body">
                   <tr><td class="font-bold">INV-0042</td><td>Acme Corporation</td><td class="font-mono font-bold">R 24,500</td><td>28 May 2026</td><td><span class="status paid"><span class="status-dot"></span>Paid</span></td></tr>
                   <tr><td class="font-bold">INV-0043</td><td>TechSolve Pty Ltd</td><td class="font-mono font-bold">R 18,200</td><td>25 May 2026</td><td><span class="status pending"><span class="status-dot"></span>Pending</span></td></tr>
                   <tr><td class="font-bold">INV-0041</td><td>BuildRight Construction</td><td class="font-mono font-bold">R 42,000</td><td>20 May 2026</td><td><span class="status overdue"><span class="status-dot"></span>Overdue</span></td></tr>
@@ -278,22 +282,22 @@
               <thead>
                 <tr><th>Code</th><th>Account Name</th><th>Type</th><th class="text-right">Balance</th></tr>
               </thead>
-              <tbody>
-                <tr class="account-row"><td>1010</td><td><span class="indent font-bold">Cash & Bank</span></td><td>Asset</td><td class="text-right font-mono font-bold text-green">R 2,450,000</td></tr>
-                <tr class="account-row"><td>1020</td><td><span class="indent-2">Chequing Account</span></td><td>Asset</td><td class="text-right font-mono">R 1,200,000</td></tr>
-                <tr class="account-row"><td>1030</td><td><span class="indent-2">Savings Account</span></td><td>Asset</td><td class="text-right font-mono">R 1,250,000</td></tr>
-                <tr class="account-row"><td>1100</td><td><span class="indent font-bold">Accounts Receivable</span></td><td>Asset</td><td class="text-right font-mono font-bold">R 385,000</td></tr>
-                <tr class="account-row"><td>1200</td><td><span class="indent font-bold">Inventory</span></td><td>Asset</td><td class="text-right font-mono font-bold">R 620,000</td></tr>
-                <tr class="account-row"><td>1300</td><td><span class="indent font-bold">Fixed Assets</span></td><td>Asset</td><td class="text-right font-mono font-bold">R 1,850,000</td></tr>
-                <tr class="account-row"><td>2010</td><td><span class="indent font-bold">Accounts Payable</span></td><td>Liability</td><td class="text-right font-mono font-bold text-red">R 312,000</td></tr>
-                <tr class="account-row"><td>2100</td><td><span class="indent font-bold">VAT Payable</span></td><td>Liability</td><td class="text-right font-mono font-bold text-red">R 98,500</td></tr>
-                <tr class="account-row"><td>3010</td><td><span class="indent font-bold">Owner's Equity</span></td><td>Equity</td><td class="text-right font-mono font-bold text-green">R 3,200,000</td></tr>
-                <tr class="account-row"><td>3020</td><td><span class="indent font-bold">Retained Earnings</span></td><td>Equity</td><td class="text-right font-mono font-bold text-green">R 1,420,000</td></tr>
-                <tr class="account-row"><td>4010</td><td><span class="indent font-bold">Sales Revenue</span></td><td>Revenue</td><td class="text-right font-mono font-bold text-green">R 1,842,500</td></tr>
-                <tr class="account-row"><td>5010</td><td><span class="indent font-bold">Salaries & Wages</span></td><td>Expense</td><td class="text-right font-mono font-bold text-red">R 520,000</td></tr>
-                <tr class="account-row"><td>5020</td><td><span class="indent font-bold">Rent & Utilities</span></td><td>Expense</td><td class="text-right font-mono font-bold text-red">R 180,000</td></tr>
-                <tr class="account-row"><td>5030</td><td><span class="indent font-bold">Office Supplies</span></td><td>Expense</td><td class="text-right font-mono font-bold text-red">R 45,000</td></tr>
-              </tbody>
+            <tbody id="accounts-body">
+              <tr class="account-row"><td>1010</td><td><span class="indent font-bold">Cash & Bank</span></td><td>Asset</td><td class="text-right font-mono font-bold text-green">R 2,450,000</td></tr>
+              <tr class="account-row"><td>1020</td><td><span class="indent-2">Chequing Account</span></td><td>Asset</td><td class="text-right font-mono">R 1,200,000</td></tr>
+              <tr class="account-row"><td>1030</td><td><span class="indent-2">Savings Account</span></td><td>Asset</td><td class="text-right font-mono">R 1,250,000</td></tr>
+              <tr class="account-row"><td>1100</td><td><span class="indent font-bold">Accounts Receivable</span></td><td>Asset</td><td class="text-right font-mono font-bold">R 385,000</td></tr>
+              <tr class="account-row"><td>1200</td><td><span class="indent font-bold">Inventory</span></td><td>Asset</td><td class="text-right font-mono font-bold">R 620,000</td></tr>
+              <tr class="account-row"><td>1300</td><td><span class="indent font-bold">Fixed Assets</span></td><td>Asset</td><td class="text-right font-mono font-bold">R 1,850,000</td></tr>
+              <tr class="account-row"><td>2010</td><td><span class="indent font-bold">Accounts Payable</span></td><td>Liability</td><td class="text-right font-mono font-bold text-red">R 312,000</td></tr>
+              <tr class="account-row"><td>2100</td><td><span class="indent font-bold">VAT Payable</span></td><td>Liability</td><td class="text-right font-mono font-bold text-red">R 98,500</td></tr>
+              <tr class="account-row"><td>3010</td><td><span class="indent font-bold">Owner's Equity</span></td><td>Equity</td><td class="text-right font-mono font-bold text-green">R 3,200,000</td></tr>
+              <tr class="account-row"><td>3020</td><td><span class="indent font-bold">Retained Earnings</span></td><td>Equity</td><td class="text-right font-mono font-bold text-green">R 1,420,000</td></tr>
+              <tr class="account-row"><td>4010</td><td><span class="indent font-bold">Sales Revenue</span></td><td>Revenue</td><td class="text-right font-mono font-bold text-green">R 1,842,500</td></tr>
+              <tr class="account-row"><td>5010</td><td><span class="indent font-bold">Salaries & Wages</span></td><td>Expense</td><td class="text-right font-mono font-bold text-red">R 520,000</td></tr>
+              <tr class="account-row"><td>5020</td><td><span class="indent font-bold">Rent & Utilities</span></td><td>Expense</td><td class="text-right font-mono font-bold text-red">R 180,000</td></tr>
+              <tr class="account-row"><td>5030</td><td><span class="indent font-bold">Office Supplies</span></td><td>Expense</td><td class="text-right font-mono font-bold text-red">R 45,000</td></tr>
+            </tbody>
             </table>
           </div>
         </div>
@@ -322,16 +326,7 @@
               <thead>
                 <tr><th>Date</th><th>Entry #</th><th>Account</th><th>Description</th><th class="text-right">Debit</th><th class="text-right">Credit</th></tr>
               </thead>
-              <tbody>
-                <tr><td>31 May 2026</td><td class="font-bold">JE-015</td><td>Accounts Receivable</td><td>May sales closing entry</td><td class="text-right font-mono">R 42,000</td><td class="text-right font-mono">—</td></tr>
-                <tr><td>31 May 2026</td><td class="font-bold">JE-015</td><td>Sales Revenue</td><td>May sales closing entry</td><td class="text-right font-mono">—</td><td class="text-right font-mono">R 42,000</td></tr>
-                <tr><td>30 May 2026</td><td class="font-bold">JE-014</td><td>Salaries & Wages</td><td>May payroll</td><td class="text-right font-mono">R 52,000</td><td class="text-right font-mono">—</td></tr>
-                <tr><td>30 May 2026</td><td class="font-bold">JE-014</td><td>Cash & Bank</td><td>May payroll</td><td class="text-right font-mono">—</td><td class="text-right font-mono">R 52,000</td></tr>
-                <tr><td>28 May 2026</td><td class="font-bold">JE-013</td><td>Cash & Bank</td><td>INV-0042 payment received</td><td class="text-right font-mono">R 24,500</td><td class="text-right font-mono">—</td></tr>
-                <tr><td>28 May 2026</td><td class="font-bold">JE-013</td><td>Accounts Receivable</td><td>INV-0042 payment received</td><td class="text-right font-mono">—</td><td class="text-right font-mono">R 24,500</td></tr>
-                <tr><td>25 May 2026</td><td class="font-bold">JE-012</td><td>Rent & Utilities</td><td>June rent payment</td><td class="text-right font-mono">R 15,000</td><td class="text-right font-mono">—</td></tr>
-                <tr><td>25 May 2026</td><td class="font-bold">JE-012</td><td>Cash & Bank</td><td>June rent payment</td><td class="text-right font-mono">—</td><td class="text-right font-mono">R 15,000</td></tr>
-              </tbody>
+            <tbody id="ledger-body">
             </table>
           </div>
         </div>
@@ -352,15 +347,15 @@
         <div class="stats-grid" style="grid-template-columns:repeat(3,1fr);">
           <div class="stat-card">
             <div class="stat-card-label">Total Outstanding</div>
-            <div class="stat-card-value text-red font-bold" style="font-size:1.4rem;">R 385,000</div>
+            <div class="stat-card-value text-red font-bold" id="inv-outstanding" style="font-size:1.4rem;">R 385,000</div>
           </div>
           <div class="stat-card">
             <div class="stat-card-label">Overdue</div>
-            <div class="stat-card-value text-red font-bold" style="font-size:1.4rem;">R 72,000</div>
+            <div class="stat-card-value text-red font-bold" id="inv-overdue" style="font-size:1.4rem;">R 72,000</div>
           </div>
           <div class="stat-card">
             <div class="stat-card-label">This Month Collected</div>
-            <div class="stat-card-value text-green font-bold" style="font-size:1.4rem;">R 128,500</div>
+            <div class="stat-card-value text-green font-bold" id="inv-collected" style="font-size:1.4rem;">R 128,500</div>
           </div>
         </div>
         <div class="panel">
@@ -369,14 +364,7 @@
               <thead>
                 <tr><th>Invoice #</th><th>Customer</th><th>Amount</th><th>Issue Date</th><th>Due Date</th><th>Status</th></tr>
               </thead>
-              <tbody>
-                <tr><td class="font-bold">INV-0043</td><td>TechSolve Pty Ltd</td><td class="font-mono font-bold">R 18,200</td><td>25 May 2026</td><td>24 Jun 2026</td><td><span class="status pending"><span class="status-dot"></span>Pending</span></td></tr>
-                <tr><td class="font-bold">INV-0042</td><td>Acme Corporation</td><td class="font-mono font-bold">R 24,500</td><td>20 May 2026</td><td>19 Jun 2026</td><td><span class="status paid"><span class="status-dot"></span>Paid</span></td></tr>
-                <tr><td class="font-bold">INV-0041</td><td>BuildRight Construction</td><td class="font-mono font-bold">R 42,000</td><td>10 May 2026</td><td>09 Jun 2026</td><td><span class="status overdue"><span class="status-dot"></span>Overdue</span></td></tr>
-                <tr><td class="font-bold">INV-0040</td><td>Global Logistics Co.</td><td class="font-mono font-bold">R 9,850</td><td>05 May 2026</td><td>04 Jun 2026</td><td><span class="status paid"><span class="status-dot"></span>Paid</span></td></tr>
-                <tr><td class="font-bold">INV-0039</td><td>Alpha Manufacturing</td><td class="font-mono font-bold">R 67,000</td><td>28 Apr 2026</td><td>28 May 2026</td><td><span class="status overdue"><span class="status-dot"></span>Overdue</span></td></tr>
-                <tr><td class="font-bold">INV-0038</td><td>Nexus Consulting</td><td class="font-mono font-bold">R 31,500</td><td>20 Apr 2026</td><td>20 May 2026</td><td><span class="status pending"><span class="status-dot"></span>Pending</span></td></tr>
-              </tbody>
+              <tbody id="invoices-body">
             </table>
           </div>
         </div>
@@ -397,15 +385,15 @@
         <div class="stats-grid" style="grid-template-columns:repeat(3,1fr);">
           <div class="stat-card">
             <div class="stat-card-label">Total Outstanding</div>
-            <div class="stat-card-value text-red font-bold" style="font-size:1.4rem;">R 312,000</div>
+            <div class="stat-card-value text-red font-bold" id="bill-outstanding" style="font-size:1.4rem;">R 312,000</div>
           </div>
           <div class="stat-card">
             <div class="stat-card-label">Due Within 30 Days</div>
-            <div class="stat-card-value text-gold font-bold" style="font-size:1.4rem;">R 148,000</div>
+            <div class="stat-card-value text-gold font-bold" id="bill-due30" style="font-size:1.4rem;">R 148,000</div>
           </div>
           <div class="stat-card">
             <div class="stat-card-label">Overdue</div>
-            <div class="stat-card-value text-red font-bold" style="font-size:1.4rem;">R 30,500</div>
+            <div class="stat-card-value text-red font-bold" id="bill-overdue" style="font-size:1.4rem;">R 30,500</div>
           </div>
         </div>
         <div class="panel">
@@ -414,13 +402,7 @@
               <thead>
                 <tr><th>Bill #</th><th>Supplier</th><th>Amount</th><th>Issue Date</th><th>Due Date</th><th>Status</th></tr>
               </thead>
-              <tbody>
-                <tr><td class="font-bold">BILL-0020</td><td>CloudHost Services</td><td class="font-mono font-bold">R 3,500</td><td>28 May 2026</td><td>27 Jun 2026</td><td><span class="status pending"><span class="status-dot"></span>Pending</span></td></tr>
-                <tr><td class="font-bold">BILL-0019</td><td>OfficeWorks Supplies</td><td class="font-mono font-bold">R 8,750</td><td>25 May 2026</td><td>24 Jun 2026</td><td><span class="status pending"><span class="status-dot"></span>Pending</span></td></tr>
-                <tr><td class="font-bold">BILL-0018</td><td>PowerGrid Energy</td><td class="font-mono font-bold">R 12,400</td><td>20 May 2026</td><td>19 Jun 2026</td><td><span class="status overdue"><span class="status-dot"></span>Overdue</span></td></tr>
-                <tr><td class="font-bold">BILL-0017</td><td>PropCo Real Estate</td><td class="font-mono font-bold">R 85,000</td><td>01 May 2026</td><td>31 May 2026</td><td><span class="status paid"><span class="status-dot"></span>Paid</span></td></tr>
-                <tr><td class="font-bold">BILL-0016</td><td>TechLogix IT</td><td class="font-mono font-bold">R 18,100</td><td>28 Apr 2026</td><td>28 May 2026</td><td><span class="status overdue"><span class="status-dot"></span>Overdue</span></td></tr>
-              </tbody>
+              <tbody id="bills-body">
             </table>
           </div>
         </div>
@@ -438,30 +420,13 @@
             <button class="btn btn-primary btn-sm">Reconcile</button>
           </div>
         </div>
-        <div class="stats-grid" style="grid-template-columns:repeat(2,1fr);">
-          <div class="stat-card">
-            <div class="stat-card-header"><span class="stat-card-label">Chequing Account</span><span class="stat-card-icon green"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="6" width="20" height="12" rx="2"/><path d="M12 12h.01"/></svg></span></div>
-            <div class="stat-card-value">R 1,200,000</div>
-            <div class="stat-card-label">&#9679;&#9679;&#9679;&#9679; 4521</div>
-          </div>
-          <div class="stat-card">
-            <div class="stat-card-header"><span class="stat-card-label">Savings Account</span><span class="stat-card-icon gold"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="6" width="20" height="12" rx="2"/><circle cx="12" cy="12" r="2"/></svg></span></div>
-            <div class="stat-card-value">R 1,250,000</div>
-            <div class="stat-card-label">&#9679;&#9679;&#9679;&#9679; 7890</div>
-          </div>
-        </div>
+        <div class="stats-grid" id="bank-accounts" style="grid-template-columns:repeat(2,1fr);"></div>
         <div class="panel">
           <div class="panel-header"><h3>Recent Transactions</h3><a href="#">View All</a></div>
           <div class="table-wrap">
             <table>
               <thead><tr><th>Date</th><th>Description</th><th>Account</th><th class="text-right">Amount</th></tr></thead>
-              <tbody>
-                <tr><td>31 May 2026</td><td>INV-0042 Payment</td><td>Chequing</td><td class="text-right font-mono text-green">R 24,500</td></tr>
-                <tr><td>30 May 2026</td><td>Payroll Transfer</td><td>Chequing</td><td class="text-right font-mono text-red">R 52,000</td></tr>
-                <tr><td>28 May 2026</td><td>OfficeWorks Supplies</td><td>Chequing</td><td class="text-right font-mono text-red">R 8,750</td></tr>
-                <tr><td>25 May 2026</td><td>Interest Earned</td><td>Savings</td><td class="text-right font-mono text-green">R 1,200</td></tr>
-                <tr><td>20 May 2026</td><td>PropCo Rent Payment</td><td>Chequing</td><td class="text-right font-mono text-red">R 85,000</td></tr>
-              </tbody>
+              <tbody id="bank-transactions-body">
             </table>
           </div>
         </div>
@@ -526,12 +491,7 @@
           <div class="table-wrap">
             <table>
               <thead><tr><th>Date</th><th>Entry #</th><th>Description</th><th class="text-right">Total Debit</th><th class="text-right">Total Credit</th></tr></thead>
-              <tbody>
-                <tr><td>31 May 2026</td><td class="font-bold">JE-015</td><td>May sales closing entry</td><td class="text-right font-mono">R 42,000</td><td class="text-right font-mono">R 42,000</td></tr>
-                <tr><td>30 May 2026</td><td class="font-bold">JE-014</td><td>May payroll</td><td class="text-right font-mono">R 52,000</td><td class="text-right font-mono">R 52,000</td></tr>
-                <tr><td>28 May 2026</td><td class="font-bold">JE-013</td><td>INV-0042 payment received</td><td class="text-right font-mono">R 24,500</td><td class="text-right font-mono">R 24,500</td></tr>
-                <tr><td>25 May 2026</td><td class="font-bold">JE-012</td><td>June rent payment</td><td class="text-right font-mono">R 15,000</td><td class="text-right font-mono">R 15,000</td></tr>
-              </tbody>
+              <tbody id="journal-entries-body">
             </table>
           </div>
         </div>
@@ -560,66 +520,14 @@
           <div class="panel">
             <div class="panel-header"><h3>Profit & Loss Statement</h3><span style="font-size:0.8rem;color:var(--text-muted);">For the period ending 31 May 2026</span></div>
             <div class="panel-body">
-              <table>
-                <tbody>
-                  <tr><td class="font-bold">Revenue</td><td class="text-right"></td></tr>
-                  <tr><td><span class="indent">Sales Revenue</span></td><td class="text-right font-mono font-bold text-green">R 1,842,500</td></tr>
-                  <tr><td style="border-bottom:2px solid var(--border);"><span class="indent font-bold">Total Revenue</span></td><td class="text-right font-mono font-bold text-green" style="border-bottom:2px solid var(--border);">R 1,842,500</td></tr>
-                  <tr><td class="font-bold" style="padding-top:16px;">Expenses</td><td class="text-right" style="padding-top:16px;"></td></tr>
-                  <tr><td><span class="indent">Salaries & Wages</span></td><td class="text-right font-mono text-red">R 520,000</td></tr>
-                  <tr><td><span class="indent">Rent & Utilities</span></td><td class="text-right font-mono text-red">R 180,000</td></tr>
-                  <tr><td><span class="indent">Office Supplies</span></td><td class="text-right font-mono text-red">R 45,000</td></tr>
-                  <tr><td><span class="indent">Marketing & Advertising</span></td><td class="text-right font-mono text-red">R 120,000</td></tr>
-                  <tr><td><span class="indent">Professional Fees</span></td><td class="text-right font-mono text-red">R 95,000</td></tr>
-                  <tr><td><span class="indent">Depreciation</span></td><td class="text-right font-mono text-red">R 24,000</td></tr>
-                  <tr><td><span class="indent">Other Expenses</span></td><td class="text-right font-mono text-red">R 140,300</td></tr>
-                  <tr><td style="border-bottom:2px solid var(--border);"><span class="indent font-bold">Total Expenses</span></td><td class="text-right font-mono font-bold text-red" style="border-bottom:2px solid var(--border);">R 1,124,300</td></tr>
-                  <tr><td class="font-bold" style="padding-top:16px;font-size:1rem;">Net Profit</td><td class="text-right font-mono font-bold text-gold" style="padding-top:16px;font-size:1.1rem;">R 718,200</td></tr>
-                </tbody>
+              <table id="pl-statement">
+                <tbody id="pl-body"></tbody>
               </table>
             </div>
           </div>
           <div class="panel">
             <div class="panel-header"><h3>Quick Insights</h3></div>
-            <div class="panel-body">
-              <div style="display:flex;flex-direction:column;gap:16px;">
-                <div>
-                  <div style="display:flex;justify-content:space-between;font-size:0.85rem;margin-bottom:6px;">
-                    <span>Gross Margin</span><span class="font-bold text-green">64.2%</span>
-                  </div>
-                  <div style="height:6px;background:var(--bg-body);border-radius:3px;overflow:hidden;">
-                    <div style="height:100%;width:64%;background:linear-gradient(90deg,var(--green),var(--green-light));border-radius:3px;"></div>
-                  </div>
-                </div>
-                <div>
-                  <div style="display:flex;justify-content:space-between;font-size:0.85rem;margin-bottom:6px;">
-                    <span>Operating Expense Ratio</span><span class="font-bold text-gold">38.5%</span>
-                  </div>
-                  <div style="height:6px;background:var(--bg-body);border-radius:3px;overflow:hidden;">
-                    <div style="height:100%;width:38.5%;background:linear-gradient(90deg,var(--gold),var(--gold-light));border-radius:3px;"></div>
-                  </div>
-                </div>
-                <div>
-                  <div style="display:flex;justify-content:space-between;font-size:0.85rem;margin-bottom:6px;">
-                    <span>Net Profit Margin</span><span class="font-bold text-red">39.0%</span>
-                  </div>
-                  <div style="height:6px;background:var(--bg-body);border-radius:3px;overflow:hidden;">
-                    <div style="height:100%;width:39%;background:linear-gradient(90deg,var(--red),var(--red-light));border-radius:3px;"></div>
-                  </div>
-                </div>
-                <div>
-                  <div style="display:flex;justify-content:space-between;font-size:0.85rem;margin-bottom:6px;">
-                    <span>Current Ratio</span><span class="font-bold">2.8 : 1</span>
-                  </div>
-                  <div style="height:6px;background:var(--bg-body);border-radius:3px;overflow:hidden;">
-                    <div style="height:100%;width:70%;background:linear-gradient(90deg,var(--green),#5ceb9a);border-radius:3px;"></div>
-                  </div>
-                </div>
-                <div style="margin-top:8px;padding-top:16px;border-top:1px solid var(--border-light);">
-                  <p style="font-size:0.8rem;color:var(--text-secondary);">&#128200; Revenue has grown 18.3% year-over-year. Consider increasing marketing spend to capitalize on momentum.</p>
-                </div>
-              </div>
-            </div>
+            <div class="panel-body" id="report-insights"></div>
           </div>
         </div>
       </section>
@@ -635,23 +543,12 @@
             <button class="btn btn-primary btn-sm">+ New Budget</button>
           </div>
         </div>
-        <div class="stats-grid" style="grid-template-columns:repeat(4,1fr);">
-          <div class="stat-card"><div class="stat-card-label">Annual Budget</div><div class="stat-card-value font-bold">R 3.2M</div></div>
-          <div class="stat-card"><div class="stat-card-label">Spent to Date</div><div class="stat-card-value text-red font-bold">R 2.1M</div></div>
-          <div class="stat-card"><div class="stat-card-label">Remaining</div><div class="stat-card-value text-green font-bold">R 1.1M</div></div>
-          <div class="stat-card"><div class="stat-card-label">Utilization</div><div class="stat-card-value text-gold font-bold">65.6%</div></div>
-        </div>
+        <div class="stats-grid" id="budget-stats" style="grid-template-columns:repeat(4,1fr);"></div>
         <div class="panel">
           <div class="table-wrap">
             <table>
               <thead><tr><th>Department</th><th>Budget</th><th class="text-right">Spent</th><th class="text-right">Remaining</th><th>Progress</th></tr></thead>
-              <tbody>
-                <tr><td class="font-bold">Operations</td><td>R 850,000</td><td class="text-right font-mono text-red">R 620,000</td><td class="text-right font-mono text-green">R 230,000</td><td><div style="height:6px;background:var(--bg-body);border-radius:3px;width:120px;overflow:hidden;"><div style="height:100%;width:73%;background:var(--red-light);border-radius:3px;"></div></div></td></tr>
-                <tr><td class="font-bold">Marketing</td><td>R 480,000</td><td class="text-right font-mono text-red">R 310,000</td><td class="text-right font-mono text-green">R 170,000</td><td><div style="height:6px;background:var(--bg-body);border-radius:3px;width:120px;overflow:hidden;"><div style="height:100%;width:65%;background:var(--gold);border-radius:3px;"></div></div></td></tr>
-                <tr><td class="font-bold">Human Resources</td><td>R 720,000</td><td class="text-right font-mono text-red">R 520,000</td><td class="text-right font-mono text-green">R 200,000</td><td><div style="height:6px;background:var(--bg-body);border-radius:3px;width:120px;overflow:hidden;"><div style="height:100%;width:72%;background:var(--gold);border-radius:3px;"></div></div></td></tr>
-                <tr><td class="font-bold">Technology</td><td>R 650,000</td><td class="text-right font-mono text-red">R 380,000</td><td class="text-right font-mono text-green">R 270,000</td><td><div style="height:6px;background:var(--bg-body);border-radius:3px;width:120px;overflow:hidden;"><div style="height:100%;width:58%;background:var(--green-light);border-radius:3px;"></div></div></td></tr>
-                <tr><td class="font-bold">Admin & Other</td><td>R 500,000</td><td class="text-right font-mono text-red">R 270,000</td><td class="text-right font-mono text-green">R 230,000</td><td><div style="height:6px;background:var(--bg-body);border-radius:3px;width:120px;overflow:hidden;"><div style="height:100%;width:54%;background:var(--green-light);border-radius:3px;"></div></div></td></tr>
-              </tbody>
+              <tbody id="budget-body">
             </table>
           </div>
         </div>
@@ -710,6 +607,47 @@
 
 <div class="toast" id="toast"></div>
 
+<!-- ─── AI Chat Widget ─── -->
+<button class="ai-chat-toggle" id="ai-chat-toggle" title="AI Assistant">
+  <span class="ai-chat-toggle-icon">&#129302;</span>
+</button>
+
+<div class="ai-chat-panel" id="ai-chat-panel">
+  <div class="ai-chat-header">
+    <div class="ai-chat-header-info">
+      <span class="ai-chat-avatar">&#129302;</span>
+      <div>
+        <div class="ai-chat-name">LedgerAI</div>
+        <div class="ai-chat-status">Online</div>
+      </div>
+    </div>
+    <button class="ai-chat-close" id="ai-chat-close">&times;</button>
+  </div>
+  <div class="ai-chat-messages" id="ai-chat-messages">
+    <div class="chat-msg bot">
+      <div class="chat-bubble bot-bubble">Hello! I'm your AI accounting assistant. Ask me anything about your finances, or say "help" to see what I can do.</div>
+    </div>
+  </div>
+  <div class="ai-thinking" id="ai-thinking">
+    <span></span><span></span><span></span>
+  </div>
+  <div class="ai-chat-input-area">
+    <input type="text" class="ai-chat-input" id="ai-chat-input" placeholder="Ask me anything..." autocomplete="off">
+    <button class="ai-chat-send" id="ai-chat-send">
+      <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="22" y1="2" x2="11" y2="13"/><polygon points="22 2 15 22 11 13 2 9 22 2"/></svg>
+    </button>
+  </div>
+</div>
+
+<script src="js/noscript.js"></script>
+<script src="js/finance.js"></script>
+<script src="js/ai-assistant.js"></script>
+<script src="js/api.js"></script>
 <script src="js/main.js"></script>
+<script>
+if ('serviceWorker' in navigator) {
+  navigator.serviceWorker.register('sw.js').catch(function() {});
+}
+</script>
 </body>
 </html>

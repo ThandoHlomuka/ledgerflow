@@ -2,3 +2,16 @@ node_modules/
 .DS_Store
 Thumbs.db
 *.log
+
+# Electron build output
+release/
+dist/
+
+# Environment
+.env
+.env.local
+
+.vercel
+
+# Local dev server
+dev-server.js
