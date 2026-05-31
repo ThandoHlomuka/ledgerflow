@@ -1,4 +1,4 @@
-const data = require('./_data');
+const data = require('./data');
 
 /* ─── Embedded Finance Engine (server-side) ─── */
 const Finance = {

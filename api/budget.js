@@ -1,4 +1,4 @@
-const data = require('./_data');
+const data = require('./data');
 
 module.exports = (req, res) => {
   res.setHeader('Access-Control-Allow-Origin', '*');
